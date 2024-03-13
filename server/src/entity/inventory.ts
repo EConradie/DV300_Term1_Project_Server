@@ -7,18 +7,11 @@ export class Inventory {
     id!: number;
 
     @Column()
-    name!: string;
+    itemsId!: number;
 
     @Column()
-    catergory!: string;
+    warehouseId!: number;
 
     @Column()
-    icon!: string;
-
-    @Column()
-    description!: string;
-
-    @Column()
-    amount!: number;
+    quantity!: number;
 }
-

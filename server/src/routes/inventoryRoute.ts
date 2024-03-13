@@ -1,6 +1,6 @@
 import express from 'express';
 import AppDataSource from '../dataSource';
-import { Inventory } from '../entity/inventory';
+import { Items } from '../entity/items';
 
 const inventoryRouter = express.Router()
 
@@ -15,7 +15,7 @@ const appDataSource = AppDataSource;
 inventoryRouter.get('/', async (req, res) => {
     try {
 
-        const items = await appDataSource.getRepository(Inventory).find();
+        const items = await appDataSource.getRepository(Items).find();
 
         res.json(items)
 
@@ -33,7 +33,7 @@ inventoryRouter.put('/:id', async (req, res) => {
 
         const { name, catergory, item, amount } = req.body; //all teh values that we want to update
 
-        const inventoryItem = await appDataSource.getRepository(Inventory).findOneBy({ id: id })
+        const inventoryItem = await appDataSource.getRepository(Items).findOneBy({ id: id })
 
         if (!inventoryItem) {
             res.status(404).send('Item not found')
@@ -43,7 +43,7 @@ inventoryRouter.put('/:id', async (req, res) => {
             //update all the varialbes that you want to update
 
             //save the changes
-            const updatedInventoryItem = await appDataSource.getRepository(Inventory).save(inventoryItem!)
+            const updatedInventoryItem = await appDataSource.getRepository(Items).save(inventoryItem!)
 
             res.json(updatedInventoryItem)
         }

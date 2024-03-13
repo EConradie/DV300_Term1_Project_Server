@@ -7,7 +7,7 @@ const AppDataSource = new DataSource(
         "port": 5432,
         "username": "postgres",
         "password": "1234",
-        "database": "class_db",
+        "database": "naturenook_db",
         "entities": ["src/entity/**"],
         "synchronize": true,
         "logging": true

@@ -2,16 +2,20 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Users {
+
     @PrimaryGeneratedColumn()
-    id: number = 0;
+    id!: number;
 
-    @Column({length: 225})
-    username: string = 'placeholder'
+    @Column({length: 225, name: 'username'})
+    username!: string ;
 
-    @Column({length: 225})
-    email: string = 'email@email.com'
+    @Column({name: 'number'})
+    number!: number ;
 
-    @Column()
-    years: number = 1
+    @Column({name: 'isLoggedIn'})
+    isLoggedIn!: boolean;
+
+    @Column({name: 'image'})
+    image: string = 'default.jpg'
 
 }
