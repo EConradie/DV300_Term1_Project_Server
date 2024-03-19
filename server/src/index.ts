@@ -4,6 +4,11 @@ import { DataSource } from 'typeorm';
 import { Users } from './entity/users';
 import AppDataSource from './dataSource';
 import inventoryRouter  from './routes/inventoryRoute';
+import itemsRouter from './routes/itemsRoute';
+import packagesRouter from './routes/packagesRoute';
+import usersRouter from './routes/usersRoute';
+import warehousesRouter from './routes/warehousesRoute';
+
 
 const cors = require('cors')
 
@@ -19,13 +24,15 @@ app.get('/', (req, res) => {
   res.send('Hello, Dev!');
 });
 
-app.get('/users', async (req,res) => {
-  const users = await appDataSource.manager.find(Users);
-  console.log(users)
-  res.send(users)
- })
-
 app.use('/inventory', inventoryRouter)
+
+app.use('/items', itemsRouter)
+
+app.use('/packages', packagesRouter)
+
+app.use('/users', usersRouter)
+
+app.use('/warehouses', warehousesRouter)
 
 app.listen(process.env.PORT, () => {
   console.log('Server is listening on port 3000');
