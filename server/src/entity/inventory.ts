@@ -1,17 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
+import { Items } from "./items";
+import { Warehouse } from "./warehouses";
 
 @Entity()
 export class Inventory {
 
     @PrimaryGeneratedColumn()
-    id!: number;
+    id!: number
 
     @Column()
-    itemsId!: number;
+    quantity!: number
 
-    @Column()
-    warehouseId!: number;
+    @OneToMany(() => Items, item => item.inventoryItems)
+    item!: Items
 
-    @Column()
-    quantity!: number;
+    @ManyToOne(() => Warehouse, warehouse => warehouse.inventory)
+    warehouse!: Warehouse
+   
 }

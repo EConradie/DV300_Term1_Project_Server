@@ -1,33 +1,38 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from "typeorm";
+import { Inventory } from "./inventory";
+import { Packages } from "./packages";
 
 @Entity()
 export class Items {
 
     @PrimaryGeneratedColumn()
-    id!: number;
+    id!: number
 
     @Column()
-    name!: string;
+    name!: string
 
     @Column()
-    category!: string;
+    category!: string
 
     @Column()
-    brand!: string;
+    brand!: string
 
     @Column()
-    price!: number;
+    price!: number
 
     @Column()
-    amount!: number;
+    quantity!: number
 
     @Column()
-    model!: string;
+    model!: string
 
     @Column()
-    icon!: string;
+    icon!: string
 
-    @Column()
-    description!: string;
+    @ManyToOne(() => Inventory, inventory => inventory.item)
+    inventoryItems!: Inventory[]
+
+    @ManyToOne(() => Packages, packages => packages.items)
+    package!: Packages
 }
 

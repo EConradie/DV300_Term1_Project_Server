@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn } from "typeorm";
+import { Items } from "./items";
+
 
 @Entity()
 export class Packages {
@@ -6,30 +8,32 @@ export class Packages {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column({length:225})
-    warehouseID!: string;
-
-    @Column({length:225})
-    ItemID!: string;
-
-    @Column({length:225})
-    name!: string;
-
-    @Column({length:225})
-    category!: string;
+    @Column()
+    warehouseId!: number
 
     @Column()
-    price!: number;
+    name!: string
 
     @Column()
-    quantity!: number;
+    category!: string
 
     @Column()
-    date!: Date;
+    price!: number
 
-    @Column({length:225})
-    image!: string;
+    @Column()
+    quantity!: number
 
-    @Column({length:225})
-    description!: string;
+    @Column()
+    date!: Date
+
+    @Column()
+    image!: string
+
+    @Column()
+    description!: string
+
+    @OneToMany(type => Items, (items) => items.package)
+    items?: Items[];
+
+
 }

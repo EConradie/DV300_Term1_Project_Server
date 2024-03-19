@@ -4,16 +4,16 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class Users {
 
     @PrimaryGeneratedColumn()
-    id!: number;
+    id!: number
 
     @Column({length: 225, name: 'username'})
-    username!: string ;
+    username!: string 
 
     @Column({name: 'number'})
-    number!: number ;
+    number!: number
 
     @Column({name: 'isLoggedIn'})
-    isLoggedIn!: boolean;
+    isLoggedIn!: boolean
 
     @Column({name: 'image'})
     image: string = 'default.jpg'

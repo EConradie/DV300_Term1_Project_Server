@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Inventory } from "./inventory";
 
 @Entity()
 export class Warehouse {
@@ -17,4 +18,7 @@ export class Warehouse {
 
     @Column({ name: "Description" })
     description!: string;
+
+    @OneToMany(() => Inventory, (inventory: Inventory) => inventory.warehouse)
+    inventory!: Inventory;
 }
