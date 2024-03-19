@@ -7,7 +7,7 @@ const usersRouter = express.Router();
 const appDataSource = AppDataSource;
 
 //Get all users
-usersRouter.put("/", async (req, res) => {
+usersRouter.get("/", async (req, res) => {
     try {
         const users = await appDataSource
             .getRepository(Users)

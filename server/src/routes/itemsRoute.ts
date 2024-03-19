@@ -7,15 +7,15 @@ const itemsRouter = express.Router();
 const appDataSource = AppDataSource;
 
 //Get all items
-itemsRouter.put("/", async (req, res) => {
+itemsRouter.get("/", async (req, res) => {
   try {
     const items = await appDataSource
       .getRepository(Items)
       .createQueryBuilder("items")
-      .leftJoinAndSelect("items.inventoryItems", "inventoryItems")
+      .leftJoinAndSelect("items.inventory", "inventory")
       .leftJoinAndSelect("items.package", "package")
       .getMany();
-      
+
     res.json(items);
   } catch (error) {
     console.log("Error fetching items", error);

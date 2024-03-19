@@ -7,7 +7,7 @@ const packagesRouter = express.Router();
 const appDataSource = AppDataSource;
 
 //Get all packages
-packagesRouter.put("/", async (req, res) => {
+packagesRouter.get("/", async (req, res) => {
     try {
         const packages = await appDataSource
             .getRepository(Packages)

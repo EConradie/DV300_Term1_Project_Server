@@ -9,6 +9,9 @@ export class Items {
     id!: number
 
     @Column()
+    public packageId!: number
+
+    @Column()
     name!: string
 
     @Column()
@@ -29,8 +32,8 @@ export class Items {
     @Column()
     icon!: string
 
-    @ManyToOne(() => Inventory, inventory => inventory.item)
-    inventoryItems!: Inventory[]
+    @ManyToOne(() => Inventory, inventory => inventory.items)
+    inventory!: Inventory[]
 
     @ManyToOne(() => Packages, packages => packages.items)
     package!: Packages

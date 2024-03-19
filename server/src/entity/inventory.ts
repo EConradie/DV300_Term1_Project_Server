@@ -11,10 +11,10 @@ export class Inventory {
     @Column()
     quantity!: number
 
-    @OneToMany(() => Items, item => item.inventoryItems)
-    item!: Items
+    @OneToMany(() => Items, items => items.inventory)
+    items!: Items[];
 
     @ManyToOne(() => Warehouse, warehouse => warehouse.inventory)
     warehouse!: Warehouse
-   
+
 }

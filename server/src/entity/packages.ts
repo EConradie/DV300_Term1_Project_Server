@@ -9,9 +9,6 @@ export class Packages {
     id!: number;
 
     @Column()
-    warehouseId!: number
-
-    @Column()
     name!: string
 
     @Column()

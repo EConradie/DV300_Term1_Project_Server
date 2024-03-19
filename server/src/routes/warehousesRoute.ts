@@ -7,7 +7,7 @@ const warehousesRouter = express.Router();
 const appDataSource = AppDataSource;
 
 //Get all warehouses
-warehousesRouter.put("/", async (req, res) => {
+warehousesRouter.get("/", async (req, res) => {
     try {
         const warehouses = await appDataSource
             .getRepository(Warehouse)
