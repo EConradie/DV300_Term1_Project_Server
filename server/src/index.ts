@@ -8,6 +8,7 @@ import itemsRouter from './routes/itemsRoute';
 import packagesRouter from './routes/packagesRoute';
 import usersRouter from './routes/usersRoute';
 import warehousesRouter from './routes/warehousesRoute';
+import otpRouter from './routes/otpRoute';
 
 
 const cors = require('cors')
@@ -33,6 +34,8 @@ app.use('/packages', packagesRouter)
 app.use('/users', usersRouter)
 
 app.use('/warehouses', warehousesRouter)
+
+app.use('/send-otp', otpRouter)
 
 app.listen(process.env.PORT, () => {
   console.log('Server is listening on port 3000');
