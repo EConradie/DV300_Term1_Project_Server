@@ -32,5 +32,7 @@ export class Packages {
     @OneToMany(type => Items, (items) => items.package)
     items?: Items[];
 
+    @Column()
+    amountCrafted!: number;
 
 }
