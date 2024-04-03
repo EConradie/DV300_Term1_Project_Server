@@ -12,14 +12,15 @@ const appDataSource = AppDataSource;
 //Todo: create a post endpoint, to create users
 userRouter.post("/create", async (req, res) => {
   try {
-    const { username, number, image } = req.body;
+    const { username, phone, image, isLoggedIn } = req.body;
+    console.log(req.body);
 
     var newUser = new Users();
 
     newUser.username = username;
-    newUser.number = number;
+    newUser.number = phone;
     newUser.image = image;
-    newUser.isLoggedIn = true;
+    newUser.isLoggedIn = isLoggedIn;
 
     var addedUser = await appDataSource.getRepository(Users).save(newUser);
 
@@ -31,29 +32,23 @@ userRouter.post("/create", async (req, res) => {
 });
 
 userRouter.post("/login", async (req, res) => {
-  try {
-    const { number } = req.body;
-
-    const user = await appDataSource.getRepository(Users).findOneBy({
-      number: number,
-    });
-
-    if (!user) {
-      return res.status(404).send({ message: "User not found." });
+    const { phone } = req.body;
+  
+    try {
+      const user = await appDataSource.getRepository(Users).findOneBy({ number:phone });
+      if (user) {
+        if (user.isLoggedIn) {
+          return res.json({ message: "User already logged in.", user: { username: user.username, isLoggedIn: user.isLoggedIn }});
+        } else {
+          return res.status(202).json({ message: "Proceed with OTP verification." });
+        }
+      } else {
+        return res.status(404).json({ message: "User not found. Proceed with signup/verification." });
+      }
+    } catch (error) {
+      console.log("Error during login process", error);
+      res.status(500).send({ message: "Error during login process" });
     }
-
-    if (user.isLoggedIn) {
-      return res.json({ message: "User is already logged in." });
-    } else {
-      // Assuming you want to update the isLoggedIn status upon login
-      user.isLoggedIn = true;
-      await appDataSource.getRepository(Users).save(user);
-      return res.json({ message: "Login successful.", user });
-    }
-  } catch (error) {
-    console.log("Error logging in user");
-    res.status(500).send({ message: error });
-  }
-});
+  });
 
 export default userRouter;

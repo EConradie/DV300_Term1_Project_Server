@@ -14,6 +14,6 @@ export class Users {
   @Column({ name: "image" })
   image?: string = "default.jpg";
 
-  @Column()
+  @Column({ name: "isLoggedIn" })
   isLoggedIn!: boolean;
 }

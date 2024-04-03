@@ -11,11 +11,11 @@ const verifyServiceSid = process.env.TWILIO_VERIFY_SERVICE_SID as string; // Twi
 const client = Twilio(accountSid, authToken);
 
 export const sendOtp = async (req: Request, res: Response) => {
-    const { to } = req.body;
+    const { phone } = req.body;
     try {
         const verification = await client.verify.v2.services(verifyServiceSid)
             .verifications
-            .create({to, channel: 'sms'});
+            .create({to: phone, channel: 'sms'});
         res.status(200).send({ message: 'OTP sent successfully', status: verification.status });
     } catch (error) {
         console.error('Error sending OTP:', error);
@@ -24,11 +24,11 @@ export const sendOtp = async (req: Request, res: Response) => {
 };
 
 export const verifyOtp = async (req: Request, res: Response) => {
-    const { to, code } = req.body;
+    const { phone, code } = req.body;
     try {
         const verificationCheck = await client.verify.v2.services(verifyServiceSid)
             .verificationChecks
-            .create({to, code});
+            .create({to: phone, code});
         if (verificationCheck.status === 'approved') {
             res.status(200).send({ message: 'OTP verified successfully' });
         } else {
