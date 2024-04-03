@@ -8,7 +8,7 @@ import itemsRouter from './routes/itemsRoute';
 import packagesRouter from './routes/packagesRoute';
 import usersRouter from './routes/usersRoute';
 import warehousesRouter from './routes/warehousesRoute';
-import otpRouter from './routes/otpRoute';
+import { sendOtp, verifyOtp } from './routes/otpRoute';
 
 
 const cors = require('cors')
@@ -16,6 +16,8 @@ const cors = require('cors')
 const app = express();
 
 app.use(cors())
+app.use(express.json());
+
 
 dotenv.config()
 
@@ -35,7 +37,9 @@ app.use('/users', usersRouter)
 
 app.use('/warehouses', warehousesRouter)
 
-app.use('/send-otp', otpRouter)
+app.post('/send-otp', sendOtp);
+
+app.post('/verify-otp', verifyOtp);
 
 app.listen(process.env.PORT, () => {
   console.log('Server is listening on port 3000');
