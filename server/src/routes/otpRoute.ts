@@ -1,8 +1,12 @@
 import * as dotenv from 'dotenv';
 import { Request, Response } from 'express';
 import Twilio from 'twilio';
+import AppDataSource from '../dataSource';
+import { Users } from '../entity/users';
 
 dotenv.config();
+
+const appDataSource = AppDataSource;
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID as string; // Twilio Account SID
 const authToken = process.env.TWILIO_AUTH_TOKEN as string; // Twilio Auth Token
@@ -24,18 +28,29 @@ export const sendOtp = async (req: Request, res: Response) => {
 };
 
 export const verifyOtp = async (req: Request, res: Response) => {
-    const { phone, code } = req.body;
-    try {
-        const verificationCheck = await client.verify.v2.services(verifyServiceSid)
-            .verificationChecks
-            .create({to: phone, code});
-        if (verificationCheck.status === 'approved') {
-            res.status(200).send({ message: 'OTP verified successfully' });
-        } else {
-            res.status(400).send({ message: 'Invalid OTP' });
-        }
-    } catch (error) {
-        console.error('Error verifying OTP:', error);
-        res.status(500).send({ message: 'Error verifying OTP', error: (error as { message: string }).message });
-    }
+  const { phone, code } = req.body;
+  try {
+      const verificationCheck = await client.verify.v2.services(verifyServiceSid)
+          .verificationChecks
+          .create({to: phone, code});
+      if (verificationCheck.status === 'approved') {
+          // Check if user exists
+          const user = await appDataSource.getRepository(Users).findOneBy({ number: phone });
+
+          if (user) {
+              // If user exists, update isLoggedIn to true
+              user.isLoggedIn = true;
+              await appDataSource.getRepository(Users).save(user);
+              res.json({ message: 'OTP verified. User logged in.', user: { username: user.username, isLoggedIn: user.isLoggedIn }});
+          } else {
+              // If no user is found, indicate that signup is required
+              res.status(202).json({ message: 'OTP verified. Proceed to signup.', phone });
+          }
+      } else {
+          res.status(400).send({ message: 'Invalid OTP' });
+      }
+  } catch (error) {
+      console.error('Error verifying OTP:', error);
+      res.status(500).send({ message: 'Error verifying OTP', error: (error as { message: string }).message });
+  }
 };
