@@ -26,57 +26,49 @@ packagesRouter.get("/", async (req, res) => {
 packagesRouter.put("/:id/craft", async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    let pkg = await appDataSource.getRepository(Packages).findOneBy({ id });
+    let { amount, items } = req.body;
 
-    if (!pkg) {
+    var packageRequest = await appDataSource
+      .getRepository(Packages)
+      .findOneBy({ id: id });
+
+    if (!packageRequest) {
       return res.status(404).send({ message: "Package not found" });
     } else {
-      // Assuming `items` is an array of `Items` within `Packages`
-      // You'd update `amountCrafted` and also loop through each `item` to update quantities
-      pkg.amountCrafted++;
-      if (pkg.items) {
-        await updateItemQuantities(pkg.items);
-      } else {
-        // Handle the case where pkg.items is undefined, if necessary
-        console.error("Package has no items.");
-      }
+      packageRequest!.amountCrafted = amount;
 
-      const updatedPackage = await appDataSource
+      await updateItemQuantities(items);
+
+      var newPackageData: Packages = await appDataSource
         .getRepository(Packages)
-        .save(pkg);
-      return res.json(updatedPackage);
+        .save(newPackageData!);
+      return res.json(newPackageData);
     }
   } catch (error) {
-    console.error("Error crafting package", error);
-    res.status(500).send({ message: error });
+    console.log("Error", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
 const updateItemQuantities = async (items: Items[]) => {
-    if (!items) {
-      throw new Error("No items provided for update.");
-    }
-    try {
-      for (const item of items) {
-        // Fetch the item from the database
-        let inventoryItem = await appDataSource
-          .getRepository(Items)
-          .findOneBy({ id: item.id });
-        
-        if (!inventoryItem || inventoryItem.quantity < item.quantity) {
-          throw new Error(`Insufficient inventory for item ID: ${item.id}`);
-        }
-        
-        // Deduct the quantity needed for the crafted package
-        inventoryItem.quantity -= item.quantity;
-        
-        // Save the updated inventory item back to the database
-        await appDataSource.getRepository(Items).save(inventoryItem);
+  try {
+    for (const item of items) {
+      const updatedItem = await appDataSource
+        .getRepository(Items)
+        .findOneBy({ id: item.id });
+
+      if (!updatedItem) {
+        throw new Error(`Item with ID ${item.id} not found`);
       }
-    } catch (error) {
-      console.error("Error updating item quantities:", error);
-      throw error; // This will be caught by the calling function
+
+      updatedItem!.quantity = updatedItem!.quantity - item.amountNeeded;
+
+      await appDataSource.getRepository(Items).save(updatedItem!);
     }
-  };
+  } catch (error) {
+    console.log("Error", error);
+    throw error;
+  }
+};
 
 export default packagesRouter;

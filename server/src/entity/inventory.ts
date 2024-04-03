@@ -17,4 +17,7 @@ export class Inventory {
     @ManyToOne(() => Warehouse, warehouse => warehouse.inventory)
     warehouse!: Warehouse
 
+    @Column()
+    location!: string
+
 }
