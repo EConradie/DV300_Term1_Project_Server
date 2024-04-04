@@ -34,16 +34,13 @@ export const verifyOtp = async (req: Request, res: Response) => {
           .verificationChecks
           .create({to: phone, code});
       if (verificationCheck.status === 'approved') {
-          // Check if user exists
           const user = await appDataSource.getRepository(Users).findOneBy({ number: phone });
 
           if (user) {
-              // If user exists, update isLoggedIn to true
               user.isLoggedIn = true;
               await appDataSource.getRepository(Users).save(user);
               res.json({ message: 'OTP verified. User logged in.', user: { username: user.username, isLoggedIn: user.isLoggedIn }});
           } else {
-              // If no user is found, indicate that signup is required
               res.status(202).json({ message: 'OTP verified. Proceed to signup.', phone });
           }
       } else {

@@ -35,7 +35,6 @@ itemsRouter.put("/:id", async (req, res) => {
       return res.status(404).send("Item not found");
     }
 
-    // Update item with new values
     inventoryItem = { ...inventoryItem, ...itemUpdates };
 
     const updatedInventoryItem = await appDataSource.getRepository(Items).save(inventoryItem as Items);

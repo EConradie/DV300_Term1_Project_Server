@@ -16,6 +16,7 @@ inventoryRouter.get("/", async (req, res) => {
       .getRepository(Inventory)
       .createQueryBuilder("inventory")
       .leftJoinAndSelect("inventory.items", "items")
+      .leftJoinAndSelect("inventory.packages", "packages")
       .getMany();
 
     res.json(inventory);

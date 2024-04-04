@@ -9,7 +9,7 @@ userRouter.use(express.json());
 
 const appDataSource = AppDataSource;
 
-//Todo: create a post endpoint, to create users
+//Create User
 userRouter.post("/create", async (req, res) => {
   try {
     const { username, phone, image, isLoggedIn } = req.body;
@@ -31,6 +31,7 @@ userRouter.post("/create", async (req, res) => {
   }
 });
 
+//Login User
 userRouter.post("/login", async (req, res) => {
     const { phone } = req.body;
   

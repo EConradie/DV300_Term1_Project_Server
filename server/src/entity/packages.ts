@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn, ManyToOne } from "typeorm";
 import { Items } from "./items";
-
+import { Inventory } from "./inventory";
 
 @Entity()
 export class Packages {
@@ -26,8 +26,8 @@ export class Packages {
     @Column()
     amountCrafted!: number;
 
-    @Column()
-    inventoryId!: number;
+    @ManyToOne(type => Inventory, inventory => inventory.packages)
+    inventory!: Inventory;
 
 }
 

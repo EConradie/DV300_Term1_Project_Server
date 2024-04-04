@@ -14,6 +14,7 @@ packagesRouter.get("/", async (req, res) => {
       .getRepository(Packages)
       .createQueryBuilder("packages")
       .leftJoinAndSelect("packages.items", "items")
+      .leftJoinAndSelect("packages.inventory", "inventory")
       .getMany();
 
     res.json(packages);
@@ -23,6 +24,7 @@ packagesRouter.get("/", async (req, res) => {
   }
 });
 
+//Craft Package
 packagesRouter.put("/:id/craft", async (req, res) => {
   try {
     let id = parseInt(req.params.id);
@@ -50,6 +52,7 @@ packagesRouter.put("/:id/craft", async (req, res) => {
   }
 });
 
+//Update Quantity
 const updateItemQuantities = async (items: Items[]) => {
   try {
     for (const item of items) {
