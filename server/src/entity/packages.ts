@@ -26,4 +26,8 @@ export class Packages {
     @Column()
     amountCrafted!: number;
 
+    @Column()
+    inventoryId!: number;
+
 }
+
