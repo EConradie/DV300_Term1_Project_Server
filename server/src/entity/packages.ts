@@ -15,15 +15,6 @@ export class Packages {
     category!: string
 
     @Column()
-    price!: number
-
-    @Column()
-    quantity!: number
-
-    @Column()
-    date!: Date
-
-    @Column()
     image!: string
 
     @Column()

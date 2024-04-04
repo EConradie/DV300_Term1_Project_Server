@@ -25,7 +25,7 @@ packagesRouter.get("/", async (req, res) => {
 
 packagesRouter.put("/:id/craft", async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
+    let id = parseInt(req.params.id);
     let { amount, items } = req.body;
 
     var packageRequest = await appDataSource
@@ -41,7 +41,7 @@ packagesRouter.put("/:id/craft", async (req, res) => {
 
       var newPackageData: Packages = await appDataSource
         .getRepository(Packages)
-        .save(newPackageData!);
+        .save(packageRequest!);
       return res.json(newPackageData);
     }
   } catch (error) {
