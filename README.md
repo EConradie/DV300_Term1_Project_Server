@@ -36,7 +36,7 @@ Create a `.env` file in the `server` directory. You'll need to specify your data
 ```
 PORT = 3000
 TWILIO_ACCOUNT_SID=AC464bbdb00c1b7e6b0ee938ede46e1609
-TWILIO_AUTH_TOKEN=0e616ebbdc8d482372cdba34cf0677d0
+TWILIO_AUTH_TOKEN=c933b94ee6fe16d49d7c64701cc113b0
 TWILIO_VERIFY_SERVICE_SID=VA94cd98ba30a46917cb3802ee533918c0
 ```
 
