@@ -60,6 +60,12 @@ Once the server is running, you should be able to access it at the specified add
 
 For more detailed instructions or help with specific problems, please refer to the project's documentation or contact the development team.
 
+### Challenges
+
+* For our project, we utilised pgAdmin4 to manage the database. The problem was that there were files missing from the pgAdmin4 side, which prevented the database from exporting and resulted in this error message: Failed (3221225781 is the exit code). Erik's     
+  computer is the local repository for the database. Sending a screenshot of the database to the readme file is unfortunately the only solution that works, even if it is not ideal.
+
+
 ## License
 
 [MIT](LICENSE) © Emilio Carreira, Erik Conradie
