@@ -35,9 +35,9 @@ npm install
 Create a `.env` file in the `server` directory. You'll need to specify your database connection settings and any other environment variables required by the server:
 ```
 PORT = 3000
-TWILIO_ACCOUNT_SID=AC464bbdb00c1b7e6b0ee938ede46e1609
-TWILIO_AUTH_TOKEN=c933b94ee6fe16d49d7c64701cc113b0
-TWILIO_VERIFY_SERVICE_SID=VA94cd98ba30a46917cb3802ee533918c0
+TWILIO_ACCOUNT_SID=YOUR_ACCOUNT_SID
+TWILIO_AUTH_TOKEN=YOUR_AUTH_TOKEN
+TWILIO_VERIFY_SERVICE_SID=YOUR_VERIFY_SERVICE_SID
 ```
 
 ## Step 5: Start the Server
@@ -59,12 +59,6 @@ Once the server is running, you should be able to access it at the specified add
 ## Further Help
 
 For more detailed instructions or help with specific problems, please refer to the project's documentation or contact the development team.
-
-### Challenges
-
-* For our project, we utilised pgAdmin4 to manage the database. The problem was that there were files missing from the pgAdmin4 side, which prevented the database from exporting and resulted in this error message: Failed (3221225781 is the exit code). Erik's     
-  computer is the local repository for the database. Sending a screenshot of the database to the readme file is unfortunately the only solution that works, even if it is not ideal.
-
 
 ## License
 
